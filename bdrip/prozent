@@ -1,0 +1,94 @@
+#prozent () {
+# ganze_groesse, akt_groesse
+
+#nur wenn 2 Argumente
+if [ ! $# == 3 ]; then
+	echo "Usage: $0 [whole size] [current size]"
+else
+	anfang_bar="["
+	ende_bar="]"
+	
+	#damit nicht komma stellen vorkommen
+	declare -i akt_prozent 	
+
+	akt_prozent=$(( $2*100/$1 ))
+	#pass mit den counters von for auf
+	#fill up bar with =
+	bar_f (){ #prozent
+		for (( j=0; j< $1; j++ )); do
+			full_bar=$full_bar=
+		done
+	}
+	#leere stellen danach
+	bar_e (){ #aktprozent
+		zeichen=$(( 100 - $1))
+		for (( z=0; z< $zeichen; z++ )); do
+			empty_bar=$empty_bar"-"
+		done
+	}
+	#bar "loeschen" -> sonst fullbar u empty_werden immer dia alte werte behaten
+	reset (){ #fullbar, emptybar
+		full_bar=""
+		empty_bar=""
+	}
+############################################################################
+convert_time (){ #sekunde
+	declare -i hour
+	declare -i min
+	time=$1
+
+#angegebene zeit (sekunden) nach stunden suchen und die zeit - diese stunden berechnen. Übriges für min und so weiter
+	hour=$(( $1 / 3600 ))
+	minus=$(( $hour * 3600 ))
+	zeit=$(( $1 - $minus ))
+	
+	min=$(( $zeit / 60 ))
+	minus=$(( $min * 60 ))
+	zeit=$(( $zeit - $minus ))
+
+	sec=$zeit
+}
+############################################################################
+
+
+		bar_f $akt_prozent
+		bar_e $akt_prozent
+		# ziel
+		#declare -i eta
+		#a=`echo - | awk '{ print  $(( $1 / $2)) }'`
+		#b=`echo - | awk '{ print  $(( $a * $3)) }'`
+		#c=`echo - | awk '{ print  $(( $b - $3)) }'`
+		#a=$(echo "scale=1; $1 / $2" | bc )
+		#printf   -v $a  "%.1f" "$(( $1 / $2 ))"	
+		#printf   -v $b  "%.1f" "$(( $a * $3 ))" 	
+		#printf   -v $c  "%.1f" "$(( $b - $3 ))"	
+		#b=$(echo "scale=1; $a * $3" | bc )
+		#d=$(echo "scale=1; $b * 10" | bc )
+		#c=$(echo "scale=1; $b - $3" | bc )
+		
+		#printf '%.10f\n' $c
+		#printf   -v $eta  "%.1f" "$c"	
+		#eta=${c/.*}
+		#eta=$(( $c*10 ))
+		#if ((  "$eta" ==0 ))
+		#then
+		#	eta=1
+		#fi
+		rest=$(( $1 % $2 ))
+		typeset -E a
+		a=$(( $1 / $2 ))
+		b=$(( $a * $3 ))
+		c=$(( $b - $3 ))
+		eta=$(( $1  / $2 * $3 - $3 ))
+		echo "$a $b $c $eta $rest"
+		#eta=$(echo "scale=2; $1 / $2 * $3 - $3" | bc )
+		#a=$(echo "scale=2; $ / 1024" | bc )
+		#eta=$(( $1  / $2 * $3 - $3 ))
+		convert_time $eta
+		#eta=$c
+		mb=$(echo "scale=2; $2 / 1024" | bc )
+		gb=$(echo "scale=2; $2 / 1024 / 1024" | bc )
+		#'\r' mit -en löscht die Zeile
+		echo -en "$anfang_bar$full_bar$empty_bar$ende_bar $akt_prozent% $2 kb ($mb mb or $gb gb) ETA: $eta s Elapsed time: $3 s\r"
+fi
+# }

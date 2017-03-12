@@ -1,0 +1,106 @@
+lies ganze_große ein -> 245
+lies akt_große ein   -> 48
+
+rechnet 1 prozent -> 245 /100 -> 2,49
+
+abrunden:
+48*100/245=19.59..........
+48%24
+
+declare -i akt_prozent ->      es wird als integer benutzt -> keine Bruchteiles
+
+
+ 49*100/245=20
+
+wiederhole von 0 bis 19
+	ein strich mehr
+->   ==============
+
+wiederhole solange <=100
+	berete bar vor
+		Anfang _> [
+		ermitlere leer zeichen -> 100 -20=80
+		speichere Anfang +Strich -> [==========
+		leerZeichen bearbeiten
+			wiederhole von 0 bis 79
+				speichere lerrzeichen (-)
+		fuege Anfang + Strich + leerZeichen + Ende
+		drueck sie aus + akt_prozent
+		[======================----------------------------------------------------------] 20%
+	loesche Zeichen (ganze linie)
+
+andere idee:
+bar: anfang + 100 Leerzeuchen + Ende
+
+wiederhole von 0 bis 100
+	wenn i <= als berechnete Prozent (20)
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+backspace= "\b"
+original=2500
+prozent=original/100
+
+for 1 to 100
+do
+	hol target_size -> 300
+	target_size/pprozent=3
+	echo ===			
+done	
+
+
+size=100
+1pr= 100/100=1
+
+target_get size -> 200
+1pr=2
+actual_size=22
+22/2=11
+
+echo -en "["
+empty_bar=""
+for i=0 < 100; i++
+	empty_bar=$(empty_bar)"-"
+
+echo -en "$empty_bar] 0%"
+# [----------------------------------------------------------------------------------------------] 0%
+while ($prozent < 101)
+	#bar with 10
+	#[==========-----------------------------------------------------------------------------] 10%
+	#wenn 22mod1pr=0, bar löschen, wieder füllen und prozent erhöhen
+	if ($mod == 0)
+		if ($prozent < 10)
+			extra_zeichnen=104
+		else
+			extra_zeichnen=105
+
+		for i=0 < $extra_zechnen
+			$bar=$(bar)"\b"
+		echo -en $bar
+		
+		#prozent erhöhen
+		let $proent=$($prozent +1)
+
+		# bar füllen 
+		# erst berechnen, leere plätze in bar
+		bar_aktuell=$(100 - $(22/1pr)) #89
+		# prozent zeichnen
+		for i=0 < 11
+			bar=$(bar)"="
+		#mit leere zeichnen füllen
+		for i=0 < $bar_aktuell
+			leer=$(leer)"-"
+
+		#progres bar
+		echo -en "$(bar)$l(eer) $prozent%"

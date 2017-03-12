@@ -1,0 +1,12 @@
+#!/bin/bash	
+IFS='
+'
+array=( $(find /lib/modules/ -type f -iname '*.ko' -or -iname '*.o') )
+size=${array[@]}
+
+#for i in $size
+#do
+#echo "$(array[$i])"
+#done
+
+echo $size
